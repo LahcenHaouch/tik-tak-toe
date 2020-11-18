@@ -2,6 +2,8 @@ import * as React from 'react'
 
 import './App.css'
 
+const initialMoves = Array(9).fill(null)
+
 function GridCell({value, onClick}) {
   return (
     <td>
@@ -13,27 +15,35 @@ function GridCell({value, onClick}) {
 }
 
 function Grid() {
-  const [moves, setMoves] = React.useState(Array(9).fill(null))
+  const [moves, setMoves] = React.useState(initialMoves)
+  const nextMove = 0
 
-  function handleClick() {}
+  function playMove(index) {
+    // const movesCopy = [...moves]
+    // movesCopy[index] = nextMove
+  }
+
+  function restart() {
+    setMoves(initialMoves)
+  }
 
   return (
     <table id="board">
       <tbody>
         <tr>
-          <GridCell value={'0'} onClick={handleClick}></GridCell>
-          <GridCell value={'1'} onClick={handleClick}></GridCell>
-          <GridCell value={'2'} onClick={handleClick}></GridCell>
+          <GridCell value={'0'} onClick={playMove}></GridCell>
+          <GridCell value={'1'} onClick={playMove}></GridCell>
+          <GridCell value={'2'} onClick={playMove}></GridCell>
         </tr>
         <tr>
-          <GridCell value={'3'} onClick={handleClick}></GridCell>
-          <GridCell value={'4'} onClick={handleClick}></GridCell>
-          <GridCell value={'5'} onClick={handleClick}></GridCell>
+          <GridCell value={'3'} onClick={playMove}></GridCell>
+          <GridCell value={'4'} onClick={playMove}></GridCell>
+          <GridCell value={'5'} onClick={playMove}></GridCell>
         </tr>
         <tr>
-          <GridCell value={'O'} onClick={handleClick}></GridCell>
-          <GridCell value={'7'} onClick={handleClick}></GridCell>
-          <GridCell value={'8'} onClick={handleClick}></GridCell>
+          <GridCell value={'O'} onClick={playMove}></GridCell>
+          <GridCell value={'7'} onClick={playMove}></GridCell>
+          <GridCell value={'8'} onClick={playMove}></GridCell>
         </tr>
       </tbody>
     </table>
