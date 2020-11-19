@@ -1,4 +1,4 @@
-const winningPossibilities = [
+const WINNING_POSSIBILITIES = [
   [0, 1, 2],
   [3, 4, 5],
   [6, 7, 8],
@@ -12,7 +12,7 @@ const winningPossibilities = [
 export function checkIfWinner(moves, index, nextMove) {
   let isWinner = false
 
-  const possibilities = winningPossibilities.filter(possibility =>
+  const possibilities = WINNING_POSSIBILITIES.filter(possibility =>
     possibility.includes(index),
   )
 
@@ -30,5 +30,26 @@ export function checkIfWinner(moves, index, nextMove) {
 }
 
 export function nextMove(moves) {
-  // calculate max of O and X to determine the next value
+  const maxOfXAndO = moves.reduce(
+    (prev, next) => ({
+      numberOfX: next === 'X' ? prev.numberOfX + 1 : prev.numberOfX,
+      numberOfO: next === 'O' ? prev.numberOfX + 1 : prev.numberOfX,
+    }),
+    {numberOfX: 0, numberOfO: 0},
+  )
+
+  const {numberOfX, numberOfO} = maxOfXAndO
+
+  const isGridCompleted =
+    (numberOfX === 5 && numberOfO === 4) || (numberOfO === 5 && numberOfX === 4)
+
+  if (isGridCompleted) {
+    return undefined
+  }
+
+  if (numberOfO >= numberOfX) {
+    return 'X'
+  }
+
+  return 'O'
 }
