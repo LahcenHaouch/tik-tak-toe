@@ -1,8 +1,9 @@
 import * as React from 'react'
 
 import './App.css'
+import {getNextMove, getWinner} from './utils'
 
-const initialMoves = Array(9).fill(null)
+const INITIAL_MOVES = Array(9).fill(null)
 
 function GridCell({value, onClick}) {
   return (
@@ -15,16 +16,22 @@ function GridCell({value, onClick}) {
 }
 
 function Grid() {
-  const [moves, setMoves] = React.useState(initialMoves)
-  const nextMove = 0
+  const [moves, setMoves] = React.useState(INITIAL_MOVES)
+  const nextMove = getNextMove(moves)
+  const winner = getWinner(moves)
 
   function playMove(index) {
-    // const movesCopy = [...moves]
-    // movesCopy[index] = nextMove
+    if (!nextMove || !winner) {
+      return
+    }
+    const movesCopy = [...moves]
+    movesCopy[index] = nextMove
+
+    setMoves(movesCopy)
   }
 
   function restart() {
-    setMoves(initialMoves)
+    setMoves(INITIAL_MOVES)
   }
 
   return (
