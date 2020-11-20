@@ -5,11 +5,23 @@ import {getNextMove, getWinner} from './utils'
 
 const INITIAL_MOVES = Array(9).fill(null)
 
-function StatusAction({nextMove, onRestart}) {
+function StatusAction({nextMove, winner, onRestart}) {
+  let status = 'is next'
+
+  if (!winner && !nextMove) {
+    status = 'Draw'
+  } else if (winner) {
+    status = `${winner} won`
+  } else {
+    status = `${nextMove} ${status}`
+  }
+
   return (
     <div className="status-action">
-      <div className="status">X is next</div>
-      <div className="reset">Reset</div>
+      <div className="status">{status}</div>
+      <div className="restart" onClick={onRestart}>
+        Restart
+      </div>
     </div>
   )
 }
@@ -44,7 +56,7 @@ function Grid() {
 
   return (
     <div className="container">
-      <StatusAction nextMove={nextMove} onRestart={restart} />
+      <StatusAction nextMove={nextMove} winner={winner} onRestart={restart} />
       <div className="game-grid">
         <GridCell index={0} value={moves[0]} onClick={playMove}></GridCell>
         <GridCell index={1} value={moves[1]} onClick={playMove}></GridCell>

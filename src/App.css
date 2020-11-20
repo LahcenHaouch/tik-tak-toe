@@ -24,11 +24,11 @@ body {
   justify-content: space-around;
 }
 
-.reset {
+.restart {
   cursor: pointer;
 }
 
-.reset:hover {
+.restart:hover {
   color: crimson;
 }
 
