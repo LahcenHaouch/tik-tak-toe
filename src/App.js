@@ -5,11 +5,11 @@ import {getNextMove, getWinner} from './utils'
 
 const INITIAL_MOVES = Array(9).fill(null)
 
-function GridCell({value, onClick}) {
+function GridCell({index, value, onClick}) {
   return (
     <td>
       <div className="container">
-        <button onClick={() => onClick(value)}>{value}</button>
+        <button onClick={() => onClick(index)}>{value ?? ''}</button>
       </div>
     </td>
   )
@@ -21,7 +21,7 @@ function Grid() {
   const winner = getWinner(moves)
 
   function playMove(index) {
-    if (!nextMove || !winner) {
+    if (!nextMove || winner) {
       return
     }
     const movesCopy = [...moves]
@@ -38,19 +38,19 @@ function Grid() {
     <table id="board">
       <tbody>
         <tr>
-          <GridCell value={'0'} onClick={playMove}></GridCell>
-          <GridCell value={'1'} onClick={playMove}></GridCell>
-          <GridCell value={'2'} onClick={playMove}></GridCell>
+          <GridCell index={0} value={moves[0]} onClick={playMove}></GridCell>
+          <GridCell index={1} value={moves[1]} onClick={playMove}></GridCell>
+          <GridCell index={2} value={moves[2]} onClick={playMove}></GridCell>
         </tr>
         <tr>
-          <GridCell value={'3'} onClick={playMove}></GridCell>
-          <GridCell value={'4'} onClick={playMove}></GridCell>
-          <GridCell value={'5'} onClick={playMove}></GridCell>
+          <GridCell index={3} value={moves[3]} onClick={playMove}></GridCell>
+          <GridCell index={4} value={moves[4]} onClick={playMove}></GridCell>
+          <GridCell index={5} value={moves[5]} onClick={playMove}></GridCell>
         </tr>
         <tr>
-          <GridCell value={'O'} onClick={playMove}></GridCell>
-          <GridCell value={'7'} onClick={playMove}></GridCell>
-          <GridCell value={'8'} onClick={playMove}></GridCell>
+          <GridCell index={6} value={moves[6]} onClick={playMove}></GridCell>
+          <GridCell index={7} value={moves[7]} onClick={playMove}></GridCell>
+          <GridCell index={8} value={moves[8]} onClick={playMove}></GridCell>
         </tr>
       </tbody>
     </table>

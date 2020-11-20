@@ -42,6 +42,8 @@ button {
   color: #fffffe;
   border: none;
   font-size: 70px;
+  width: 70px;
+  height: 30px;
 }
 
 .app {

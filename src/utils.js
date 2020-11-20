@@ -31,8 +31,8 @@ export function checkIfWinner(moves, index, nextMove) {
 
 export function getWinner(moves) {
   for (let i = 0; i < WINNING_POSSIBILITIES.length; i++) {
+    const firstElement = moves[WINNING_POSSIBILITIES[i][0]]
     const possibility = WINNING_POSSIBILITIES[i].map(element => moves[element])
-    const firstElement = moves[possibility[0]]
     let isWinner = possibility.every(element => element === firstElement)
 
     if (isWinner) {
@@ -47,7 +47,7 @@ export function getNextMove(moves) {
   const maxOfXAndO = moves.reduce(
     (prev, next) => ({
       numberOfX: next === 'X' ? prev.numberOfX + 1 : prev.numberOfX,
-      numberOfO: next === 'O' ? prev.numberOfX + 1 : prev.numberOfX,
+      numberOfO: next === 'O' ? prev.numberOfO + 1 : prev.numberOfO,
     }),
     {numberOfX: 0, numberOfO: 0},
   )
