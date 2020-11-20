@@ -5,13 +5,21 @@ import {getNextMove, getWinner} from './utils'
 
 const INITIAL_MOVES = Array(9).fill(null)
 
+function StatusAction({nextMove, onRestart}) {
+  return (
+    <div className="status-action">
+      <div className="status">X is next</div>
+      <div className="reset">Reset</div>
+    </div>
+  )
+}
+
 function GridCell({index, value, onClick}) {
   return (
-    <td>
-      <div className="container">
-        <button onClick={() => onClick(index)}>{value ?? ''}</button>
-      </div>
-    </td>
+    <div className="game-cell" onClick={() => onClick(index)}>
+      {value}
+      {/* <button onClick={() => onClick(index)}>{value ?? ''}</button> */}
+    </div>
   )
 }
 
@@ -35,34 +43,33 @@ function Grid() {
   }
 
   return (
-    <table id="board">
-      <tbody>
-        <tr>
-          <GridCell index={0} value={moves[0]} onClick={playMove}></GridCell>
-          <GridCell index={1} value={moves[1]} onClick={playMove}></GridCell>
-          <GridCell index={2} value={moves[2]} onClick={playMove}></GridCell>
-        </tr>
-        <tr>
-          <GridCell index={3} value={moves[3]} onClick={playMove}></GridCell>
-          <GridCell index={4} value={moves[4]} onClick={playMove}></GridCell>
-          <GridCell index={5} value={moves[5]} onClick={playMove}></GridCell>
-        </tr>
-        <tr>
-          <GridCell index={6} value={moves[6]} onClick={playMove}></GridCell>
-          <GridCell index={7} value={moves[7]} onClick={playMove}></GridCell>
-          <GridCell index={8} value={moves[8]} onClick={playMove}></GridCell>
-        </tr>
-      </tbody>
-    </table>
+    <div className="container">
+      <StatusAction nextMove={nextMove} onRestart={restart} />
+      <div className="game-grid">
+        <GridCell index={0} value={moves[0]} onClick={playMove}></GridCell>
+        <GridCell index={1} value={moves[1]} onClick={playMove}></GridCell>
+        <GridCell index={2} value={moves[2]} onClick={playMove}></GridCell>
+
+        <GridCell index={3} value={moves[3]} onClick={playMove}></GridCell>
+        <GridCell index={4} value={moves[4]} onClick={playMove}></GridCell>
+        <GridCell index={5} value={moves[5]} onClick={playMove}></GridCell>
+
+        <GridCell index={6} value={moves[6]} onClick={playMove}></GridCell>
+        <GridCell index={7} value={moves[7]} onClick={playMove}></GridCell>
+        <GridCell index={8} value={moves[8]} onClick={playMove}></GridCell>
+      </div>
+    </div>
   )
 }
 
 function App() {
   return (
-    <div className="app">
-      <h1>Tik-Tak-Toe</h1>
+    <>
+      <h1 className="title">
+        Tik <span>Tak</span> Toe
+      </h1>
       <Grid />
-    </div>
+    </>
   )
 }
 

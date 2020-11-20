@@ -46,8 +46,8 @@ export function getWinner(moves) {
 export function getNextMove(moves) {
   const maxOfXAndO = moves.reduce(
     (prev, next) => ({
-      numberOfX: next === 'X' ? prev.numberOfX + 1 : prev.numberOfX,
-      numberOfO: next === 'O' ? prev.numberOfO + 1 : prev.numberOfO,
+      numberOfX: next === '💀' ? prev.numberOfX + 1 : prev.numberOfX,
+      numberOfO: next === '🤡' ? prev.numberOfO + 1 : prev.numberOfO,
     }),
     {numberOfX: 0, numberOfO: 0},
   )
@@ -62,8 +62,8 @@ export function getNextMove(moves) {
   }
 
   if (numberOfO >= numberOfX) {
-    return 'X'
+    return '💀'
   }
 
-  return 'O'
+  return '🤡'
 }
