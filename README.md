@@ -1,6 +1,6 @@
 # tik-tak-toe
 
-Simple tik-tak-toe implemetation using React
+Simple tik-tak-toe implementation using React
 
 ## Getting Started with Create React App
 

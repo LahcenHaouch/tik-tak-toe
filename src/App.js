@@ -1,21 +1,11 @@
 import * as React from 'react'
 
 import './App.css'
-import {getNextMove, getWinner} from './utils'
+import {getNextMove, getStatus, getWinner} from './utils'
 
 const INITIAL_MOVES = Array(9).fill(null)
 
-function StatusAction({nextMove, winner, onRestart}) {
-  let status = 'is next'
-
-  if (!winner && !nextMove) {
-    status = 'Draw'
-  } else if (winner) {
-    status = `${winner} won`
-  } else {
-    status = `${nextMove} ${status}`
-  }
-
+function StatusAction({status, onRestart}) {
   return (
     <div className="status-action">
       <div className="status">{status}</div>
@@ -26,11 +16,16 @@ function StatusAction({nextMove, winner, onRestart}) {
   )
 }
 
-function GridCell({index, value, onClick}) {
+function GridCell({index, value, status, onClick}) {
+  const disabled = status === 'Draw' || status.includes('next') || value
+
   return (
-    <div className="game-cell" onClick={() => onClick(index)}>
+    <div
+      className="game-cell"
+      disabled={disabled}
+      onClick={() => onClick(index)}
+    >
       {value}
-      {/* <button onClick={() => onClick(index)}>{value ?? ''}</button> */}
     </div>
   )
 }
@@ -39,9 +34,10 @@ function Grid() {
   const [moves, setMoves] = React.useState(INITIAL_MOVES)
   const nextMove = getNextMove(moves)
   const winner = getWinner(moves)
+  const status = getStatus(nextMove, winner)
 
   function playMove(index) {
-    if (!nextMove || winner) {
+    if (!nextMove || winner || moves[index]) {
       return
     }
     const movesCopy = [...moves]
@@ -54,22 +50,20 @@ function Grid() {
     setMoves(INITIAL_MOVES)
   }
 
+  const gameGrid = moves.map((move, index) => (
+    <GridCell
+      key={index}
+      index={index}
+      value={move}
+      status={status}
+      onClick={playMove}
+    />
+  ))
+
   return (
     <div className="container">
-      <StatusAction nextMove={nextMove} winner={winner} onRestart={restart} />
-      <div className="game-grid">
-        <GridCell index={0} value={moves[0]} onClick={playMove}></GridCell>
-        <GridCell index={1} value={moves[1]} onClick={playMove}></GridCell>
-        <GridCell index={2} value={moves[2]} onClick={playMove}></GridCell>
-
-        <GridCell index={3} value={moves[3]} onClick={playMove}></GridCell>
-        <GridCell index={4} value={moves[4]} onClick={playMove}></GridCell>
-        <GridCell index={5} value={moves[5]} onClick={playMove}></GridCell>
-
-        <GridCell index={6} value={moves[6]} onClick={playMove}></GridCell>
-        <GridCell index={7} value={moves[7]} onClick={playMove}></GridCell>
-        <GridCell index={8} value={moves[8]} onClick={playMove}></GridCell>
-      </div>
+      <StatusAction status={status} onRestart={restart} />
+      <div className="game-grid">{gameGrid}</div>
     </div>
   )
 }

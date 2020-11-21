@@ -9,26 +9,6 @@ const WINNING_POSSIBILITIES = [
   [2, 4, 6],
 ]
 
-export function checkIfWinner(moves, index, nextMove) {
-  let isWinner = false
-
-  const possibilities = WINNING_POSSIBILITIES.filter(possibility =>
-    possibility.includes(index),
-  )
-
-  for (let i = 0; i < possibilities.length; i++) {
-    const element = possibilities[i]
-
-    isWinner = element.every(cell => moves[cell] === nextMove)
-
-    if (isWinner) {
-      break
-    }
-  }
-
-  return isWinner
-}
-
 export function getWinner(moves) {
   for (let i = 0; i < WINNING_POSSIBILITIES.length; i++) {
     const firstElement = moves[WINNING_POSSIBILITIES[i][0]]
@@ -66,4 +46,14 @@ export function getNextMove(moves) {
   }
 
   return '🤡'
+}
+
+export function getStatus(nextMove, winner) {
+  if (!winner && !nextMove) {
+    return 'Draw'
+  } else if (winner) {
+    return `${winner} won`
+  } else {
+    return `${nextMove} is next`
+  }
 }
