@@ -13,7 +13,13 @@ export function getWinner(moves) {
   for (let i = 0; i < WINNING_POSSIBILITIES.length; i++) {
     const firstElement = moves[WINNING_POSSIBILITIES[i][0]]
     const possibility = WINNING_POSSIBILITIES[i].map(element => moves[element])
-    let isWinner = possibility.every(element => element === firstElement)
+    let isWinner = possibility.every(
+      element =>
+        element === firstElement &&
+        (firstElement === '💀' || firstElement === '🤡'),
+    )
+
+    console.log('isWinner: ', isWinner)
 
     if (isWinner) {
       return firstElement

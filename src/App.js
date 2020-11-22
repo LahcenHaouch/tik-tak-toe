@@ -17,14 +17,11 @@ function StatusAction({status, onRestart}) {
 }
 
 function GridCell({index, value, status, onClick}) {
-  const disabled = status === 'Draw' || status.includes('next') || value
+  const disabled = value || status.includes('won') || status === 'Draw'
+  const className = disabled ? 'game-cell disabled' : 'game-cell'
 
   return (
-    <div
-      className="game-cell"
-      disabled={disabled}
-      onClick={() => onClick(index)}
-    >
+    <div className={className} onClick={() => onClick(index)}>
       {value}
     </div>
   )
