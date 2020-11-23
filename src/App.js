@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 import './App.css'
-import {getNextMove, getStatus, getWinner} from './utils'
+import {getWinner, getNextMove, getStatus, useLocalStorage} from './utils'
 
 const INITIAL_MOVES = Array(9).fill(null)
 
@@ -28,7 +28,10 @@ function GridCell({index, value, status, onClick}) {
 }
 
 function Grid() {
-  const [moves, setMoves] = React.useState(INITIAL_MOVES)
+  const [moves, setMoves] = useLocalStorage({
+    initialState: INITIAL_MOVES,
+    key: 'grid-state',
+  })
   const nextMove = getNextMove(moves)
   const winner = getWinner(moves)
   const status = getStatus(nextMove, winner)

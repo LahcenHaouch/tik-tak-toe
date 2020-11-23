@@ -1,3 +1,5 @@
+import {useEffect, useRef, useState} from 'react'
+
 const WINNING_POSSIBILITIES = [
   [0, 1, 2],
   [3, 4, 5],
@@ -62,4 +64,31 @@ export function getStatus(nextMove, winner) {
   } else {
     return `${nextMove} is next`
   }
+}
+
+export function useLocalStorage({
+  initialState,
+  key,
+  deserialize = JSON.parse,
+  serialize = JSON.stringify,
+}) {
+  const prevKey = useRef(key)
+
+  const [state, setState] = useState(
+    () =>
+      deserialize(localStorage.getItem(key)) ||
+      (typeof initialState === 'function' ? initialState() : initialState),
+  )
+
+  useEffect(() => {
+    if (key !== prevKey.current) {
+      localStorage.removeItem(prevKey)
+    }
+
+    prevKey.current = key
+
+    localStorage.setItem(key, serialize(state))
+  }, [state, key, serialize])
+
+  return [state, setState]
 }
