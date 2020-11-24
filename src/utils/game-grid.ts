@@ -1,5 +1,3 @@
-import {useEffect, useRef, useState} from 'react'
-
 const WINNING_POSSIBILITIES = [
   [0, 1, 2],
   [3, 4, 5],
@@ -11,7 +9,9 @@ const WINNING_POSSIBILITIES = [
   [2, 4, 6],
 ]
 
-export function getWinner(moves) {
+export type Move = '💀' | '🤡'
+
+export function getWinner(moves: Move[]): Move | undefined {
   for (let i = 0; i < WINNING_POSSIBILITIES.length; i++) {
     const firstElement = moves[WINNING_POSSIBILITIES[i][0]]
     const possibility = WINNING_POSSIBILITIES[i].map(element => moves[element])
@@ -31,7 +31,7 @@ export function getWinner(moves) {
   return undefined
 }
 
-export function getNextMove(moves) {
+export function getNextMove(moves: Move[]): Move | undefined {
   const maxOfXAndO = moves.reduce(
     (prev, next) => ({
       numberOfX: next === '💀' ? prev.numberOfX + 1 : prev.numberOfX,
@@ -56,7 +56,10 @@ export function getNextMove(moves) {
   return '🤡'
 }
 
-export function getStatus(nextMove, winner) {
+export function getStatus(
+  nextMove: Move | undefined,
+  winner: Move | undefined,
+) {
   if (!winner && !nextMove) {
     return 'Draw'
   } else if (winner) {
@@ -64,31 +67,4 @@ export function getStatus(nextMove, winner) {
   } else {
     return `${nextMove} is next`
   }
-}
-
-export function useLocalStorage({
-  initialState,
-  key,
-  deserialize = JSON.parse,
-  serialize = JSON.stringify,
-}) {
-  const prevKey = useRef(key)
-
-  const [state, setState] = useState(
-    () =>
-      deserialize(localStorage.getItem(key)) ||
-      (typeof initialState === 'function' ? initialState() : initialState),
-  )
-
-  useEffect(() => {
-    if (key !== prevKey.current) {
-      localStorage.removeItem(prevKey)
-    }
-
-    prevKey.current = key
-
-    localStorage.setItem(key, serialize(state))
-  }, [state, key, serialize])
-
-  return [state, setState]
 }

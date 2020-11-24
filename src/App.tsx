@@ -1,11 +1,11 @@
 import * as React from 'react'
 
 import './App.css'
-import {getWinner, getNextMove, getStatus, useLocalStorage} from './utils'
+import {getWinner, getNextMove, getStatus, useLocalStorage, Move } from './utils'
 
-const INITIAL_MOVES = Array(9).fill(null)
+const INITIAL_MOVES: Array<Move |null > = Array(9).fill(null)
 
-function StatusAction({status, onRestart}) {
+function StatusAction({status, onRestart}: {status: string, onRestart: () => void}) {
   return (
     <div className="status-action">
       <div className="status">{status}</div>
@@ -16,7 +16,7 @@ function StatusAction({status, onRestart}) {
   )
 }
 
-function GridCell({index, value, status, onClick}) {
+function GridCell({index, value, status, onClick}: {index: number, value: Move | null, status: string, onClick: (index: number) => void}) {
   const disabled = value || status.includes('won') || status === 'Draw'
   const className = disabled ? 'game-cell disabled' : 'game-cell'
 
@@ -36,7 +36,7 @@ function Grid() {
   const winner = getWinner(moves)
   const status = getStatus(nextMove, winner)
 
-  function playMove(index) {
+  function playMove(index: number) {
     if (!nextMove || winner || moves[index]) {
       return
     }
@@ -50,7 +50,7 @@ function Grid() {
     setMoves(INITIAL_MOVES)
   }
 
-  const gameGrid = moves.map((move, index) => (
+  const gameGrid = moves.map((move: Move | null, index: number) => (
     <GridCell
       key={index}
       index={index}
