@@ -16,14 +16,6 @@ body {
   color: #7f5af0;
 }
 
-.status-action {
-  display: flex;
-  font-size: 25px;
-  margin-top: -25px;
-  margin-bottom: 50px;
-  justify-content: space-around;
-}
-
 .restart {
   cursor: pointer;
 }
@@ -32,11 +24,28 @@ body {
   color: crimson;
 }
 
-.container {
+.disabled {
+  cursor: not-allowed;
+}
+
+.app-container {
+  display: flex;
+  justify-content: space-around;
+}
+
+.grid-container {
   margin: 50px;
   padding: 50px;
   border-radius: 25px;
   background-color: #242629;
+}
+
+.status-action {
+  display: flex;
+  font-size: 25px;
+  margin-top: -25px;
+  margin-bottom: 50px;
+  justify-content: space-around;
 }
 
 .game-grid {
@@ -58,6 +67,17 @@ body {
   width: 200px;
 }
 
-.disabled {
-  cursor: not-allowed;
+.history-container {
+  margin: 50px;
+  padding: 50px;
+  border-radius: 25px;
+  background-color: #242629;
+}
+
+.history-action {
+  display: flex;
+  font-size: 25px;
+  margin-top: -25px;
+  margin-bottom: 50px;
+  justify-content: space-around;
 }

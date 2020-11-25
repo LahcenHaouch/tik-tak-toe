@@ -1,11 +1,18 @@
 import * as React from 'react'
 
 import './App.css'
-import {getWinner, getNextMove, getStatus, useLocalStorage, Move } from './utils'
+import History from './history'
+import {getWinner, getNextMove, getStatus, useLocalStorage, Move} from './utils'
 
-const INITIAL_MOVES: Array<Move |null > = Array(9).fill(null)
+const INITIAL_MOVES: Array<Move | null> = Array(9).fill(null)
 
-function StatusAction({status, onRestart}: {status: string, onRestart: () => void}) {
+function StatusAction({
+  status,
+  onRestart,
+}: {
+  status: string
+  onRestart: () => void
+}) {
   return (
     <div className="status-action">
       <div className="status">{status}</div>
@@ -16,7 +23,17 @@ function StatusAction({status, onRestart}: {status: string, onRestart: () => voi
   )
 }
 
-function GridCell({index, value, status, onClick}: {index: number, value: Move | null, status: string, onClick: (index: number) => void}) {
+function GridCell({
+  index,
+  value,
+  status,
+  onClick,
+}: {
+  index: number
+  value: Move | null
+  status: string
+  onClick: (index: number) => void
+}) {
   const disabled = value || status.includes('won') || status === 'Draw'
   const className = disabled ? 'game-cell disabled' : 'game-cell'
 
@@ -61,7 +78,7 @@ function Grid() {
   ))
 
   return (
-    <div className="container">
+    <div className="grid-container">
       <StatusAction status={status} onRestart={restart} />
       <div className="game-grid">{gameGrid}</div>
     </div>
@@ -74,7 +91,10 @@ function App() {
       <h1 className="title">
         Tik <span>Tak</span> Toe
       </h1>
-      <Grid />
+      <div className="app-container">
+        <Grid />
+        <History history={[]} />
+      </div>
     </>
   )
 }
