@@ -11,7 +11,9 @@ const WINNING_POSSIBILITIES = [
 
 export type Move = '💀' | '🤡'
 
-export function getWinner(moves: Move[]): Move | undefined {
+export const INITIAL_HISTORY: Array<Array<Move | null>> = [Array(9).fill(null)]
+
+export function getWinner(moves: Array<Move | null>): Move | undefined {
   for (let i = 0; i < WINNING_POSSIBILITIES.length; i++) {
     const firstElement = moves[WINNING_POSSIBILITIES[i][0]]
     const possibility = WINNING_POSSIBILITIES[i].map(element => moves[element])
@@ -21,9 +23,7 @@ export function getWinner(moves: Move[]): Move | undefined {
         (firstElement === '💀' || firstElement === '🤡'),
     )
 
-    console.log('isWinner: ', isWinner)
-
-    if (isWinner) {
+    if (firstElement && isWinner) {
       return firstElement
     }
   }
@@ -31,7 +31,7 @@ export function getWinner(moves: Move[]): Move | undefined {
   return undefined
 }
 
-export function getNextMove(moves: Move[]): Move | undefined {
+export function getNextMove(moves: Array<Move | null>): Move | undefined {
   const maxOfXAndO = moves.reduce(
     (prev, next) => ({
       numberOfX: next === '💀' ? prev.numberOfX + 1 : prev.numberOfX,
