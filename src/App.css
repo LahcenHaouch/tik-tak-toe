@@ -81,3 +81,8 @@ body {
   margin-bottom: 50px;
   justify-content: space-around;
 }
+
+.history-card-container {
+  display: flex;
+  justify-content: center;
+}

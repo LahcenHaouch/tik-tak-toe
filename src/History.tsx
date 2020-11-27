@@ -12,13 +12,13 @@ function HistoryCard({
   const nonNullMoves = moves.filter(move => move) as Move[]
 
   const display = nonNullMoves
-    .reduce((prevMove, nextMove) => `${prevMove}->${nextMove}`, '')
-    .substring(2)
+    .reduce((prevMove, nextMove) => `${prevMove} -> ${nextMove}`, '')
+    .substring(3)
 
   return (
-    <div>
-      {/* {currentStep === index ? 'here' : ''} */}
-      <h2>{display}</h2>
+    <div className="history-card-container">
+      <div>{currentStep === index && display.length ? '👁' : ''}</div>
+      <div>{display}</div>
     </div>
   )
 }
