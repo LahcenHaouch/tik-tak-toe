@@ -16,8 +16,8 @@ function App() {
     key: 'play',
   })
 
-  function goToNextStep() {
-    setCurrentStep(currentStep + 1)
+  function switchStep(step: number) {
+    setCurrentStep(step)
   }
 
   function goToInitialStep() {
@@ -36,10 +36,14 @@ function App() {
           history={history}
           currentStep={currentStep}
           setHistory={setHistory}
-          goToNextStep={goToNextStep}
+          switchStep={switchStep}
           goToInitialStep={goToInitialStep}
         />
-        <History history={history} currentStep={currentStep} />
+        <History
+          history={history}
+          currentStep={currentStep}
+          switchStep={switchStep}
+        />
       </div>
     </>
   )

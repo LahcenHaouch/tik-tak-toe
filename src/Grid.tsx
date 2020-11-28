@@ -1,4 +1,11 @@
-import {Move, getNextMove, getWinner, getStatus, INITIAL_HISTORY} from './utils'
+import {
+  Move,
+  getNextMove,
+  getWinner,
+  getStatus,
+  INITIAL_HISTORY,
+  getHistoryCopy,
+} from './utils'
 
 function StatusAction({
   status,
@@ -42,13 +49,13 @@ function Grid({
   history,
   currentStep,
   setHistory,
-  goToNextStep,
+  switchStep,
   goToInitialStep,
 }: {
   history: Array<Array<Move | null>>
   currentStep: number
   setHistory: (history: Array<Array<Move | null>>) => void
-  goToNextStep: () => void
+  switchStep: (index: number) => void
   goToInitialStep: () => void
 }) {
   const moves: Array<Move | null> = history[currentStep]
@@ -61,13 +68,16 @@ function Grid({
       return
     }
 
-    const historyCopy: Array<Array<Move | null>> = [...history]
-    const movesCopy = [...moves]
-    movesCopy[index] = nextMove
-    historyCopy.push(movesCopy)
+    const historyCopy = getHistoryCopy({
+      history,
+      moves,
+      currentStep,
+      index,
+      nextMove,
+    })
 
     setHistory(historyCopy)
-    goToNextStep()
+    switchStep(currentStep + 1)
   }
 
   function restart() {

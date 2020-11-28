@@ -68,3 +68,27 @@ export function getStatus(
     return `${nextMove} is next`
   }
 }
+
+export function getHistoryCopy({
+  history,
+  moves,
+  currentStep,
+  index,
+  nextMove,
+}: {
+  history: Array<Array<Move | null>>
+  moves: Array<Move | null>
+  currentStep: number
+  index: number
+  nextMove: Move
+}): Array<Array<Move | null>> {
+  const historyCopy: Array<Array<Move | null>> = history.slice(
+    0,
+    currentStep + 1,
+  )
+  const movesCopy = [...moves]
+  movesCopy[index] = nextMove
+  historyCopy.push(movesCopy)
+
+  return historyCopy
+}

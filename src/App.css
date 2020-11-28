@@ -86,3 +86,7 @@ body {
   display: flex;
   justify-content: center;
 }
+
+.history-step {
+  cursor: pointer;
+}
