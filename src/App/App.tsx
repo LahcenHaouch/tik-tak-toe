@@ -1,11 +1,11 @@
 import * as React from 'react'
 
 import './App.css'
-import History from './History'
 import Grid from './Grid'
-import {useLocalStorage, INITIAL_HISTORY} from './utils'
+import History from './History'
+import {useLocalStorage, INITIAL_HISTORY} from '../utils'
 
-function App() {
+export function App() {
   const [history, setHistory] = useLocalStorage({
     initialState: INITIAL_HISTORY,
     key: 'grid-history',
@@ -48,5 +48,3 @@ function App() {
     </>
   )
 }
-
-export default App

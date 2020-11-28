@@ -5,7 +5,7 @@ import {
   getStatus,
   INITIAL_HISTORY,
   getHistoryCopy,
-} from './utils'
+} from '../../utils'
 
 function StatusAction({
   status,
@@ -45,7 +45,7 @@ function GridCell({
   )
 }
 
-function Grid({
+export function Grid({
   history,
   currentStep,
   setHistory,
@@ -102,5 +102,3 @@ function Grid({
     </div>
   )
 }
-
-export default Grid

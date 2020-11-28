@@ -1,4 +1,4 @@
-import {Move} from './utils'
+import {Move} from '../../utils'
 
 function HistoryCard({
   moves,
@@ -31,7 +31,7 @@ function HistoryCard({
   )
 }
 
-function History({
+export function History({
   history,
   currentStep,
   switchStep,
@@ -57,5 +57,3 @@ function History({
     </div>
   )
 }
-
-export default History
