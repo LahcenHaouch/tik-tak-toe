@@ -3,9 +3,11 @@ import {
   getNextMove,
   getWinner,
   getStatus,
-  INITIAL_HISTORY,
   getHistoryCopy,
+  gameConfig,
 } from '../../utils'
+
+const {INITIAL_HISTORY} = gameConfig
 
 function StatusAction({
   status,
@@ -63,7 +65,7 @@ export function Grid({
   const winner = getWinner(moves)
   const status = getStatus(nextMove, winner)
 
-  function playMove(index: number) {
+  function playMove(index: number): void {
     if (!nextMove || winner || moves[index]) {
       return
     }
@@ -80,7 +82,7 @@ export function Grid({
     switchStep(currentStep + 1)
   }
 
-  function restart() {
+  function restart(): void {
     setHistory(INITIAL_HISTORY)
     goToInitialStep()
   }

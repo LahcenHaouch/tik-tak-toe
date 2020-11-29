@@ -1,10 +1,10 @@
 import {useRef, useState, useEffect} from 'react'
 
 export interface LocalStorageOptions<T> {
-  initialState: T
-  key: string
-  serialize?: (input: T) => string
-  deserialize?: (input: string) => T
+  readonly initialState: T
+  readonly key: string
+  readonly serialize?: (input: T) => string
+  readonly deserialize?: (input: string) => T
 }
 
 export function useLocalStorage<T>({
@@ -12,7 +12,7 @@ export function useLocalStorage<T>({
   key,
   serialize = JSON.stringify,
   deserialize = JSON.parse,
-}: LocalStorageOptions<T>) {
+}: LocalStorageOptions<T>): [T, (state: T) => void] {
   const prevKeyRef = useRef(key)
 
   const [state, setState] = useState(() => {

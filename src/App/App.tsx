@@ -3,28 +3,37 @@ import * as React from 'react'
 import './App.css'
 import Grid from './Grid'
 import History from './History'
-import {useLocalStorage, INITIAL_HISTORY} from '../utils'
+import {Move, gameConfig, useLocalStorage, LocalStorageOptions} from '../utils'
+
+const {
+  INITIAL_HISTORY,
+  HISTORY_KEY,
+  INITIAL_CURRENT_STEP,
+  CURRENT_STEP_KEY,
+} = gameConfig
+
+const historyOption: LocalStorageOptions<Array<Array<Move | null>>> = {
+  initialState: INITIAL_HISTORY,
+  key: HISTORY_KEY,
+}
+
+const currentStepOption: LocalStorageOptions<number> = {
+  initialState: INITIAL_CURRENT_STEP,
+  key: CURRENT_STEP_KEY,
+}
 
 export function App() {
-  const [history, setHistory] = useLocalStorage({
-    initialState: INITIAL_HISTORY,
-    key: 'grid-history',
-  })
+  const [history, setHistory] = useLocalStorage(historyOption)
 
-  const [currentStep, setCurrentStep] = useLocalStorage({
-    initialState: 0,
-    key: 'play',
-  })
+  const [currentStep, setCurrentStep] = useLocalStorage(currentStepOption)
 
-  function switchStep(step: number) {
+  function switchStep(step: number): void {
     setCurrentStep(step)
   }
 
-  function goToInitialStep() {
-    setCurrentStep(0)
+  function goToInitialStep(): void {
+    setCurrentStep(INITIAL_CURRENT_STEP)
   }
-
-  // TODO: Radient colors and icons for X and Y
 
   return (
     <>

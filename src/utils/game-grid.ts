@@ -1,4 +1,4 @@
-const WINNING_POSSIBILITIES = [
+const WINNING_POSSIBILITIES: ReadonlyArray<ReadonlyArray<number>> = [
   [0, 1, 2],
   [3, 4, 5],
   [6, 7, 8],
@@ -9,9 +9,29 @@ const WINNING_POSSIBILITIES = [
   [2, 4, 6],
 ]
 
+export interface GameConfig {
+  INITIAL_HISTORY: Array<Array<Move | null>>
+  INITIAL_CURRENT_STEP: number
+  HISTORY_KEY: string
+  CURRENT_STEP_KEY: string
+}
+
+export interface HistoryCopyConfig {
+  history: Array<Array<Move | null>>
+  moves: Array<Move | null>
+  currentStep: number
+  index: number
+  nextMove: Move
+}
+
 export type Move = '💀' | '🤡'
 
-export const INITIAL_HISTORY: Array<Array<Move | null>> = [Array(9).fill(null)]
+export const gameConfig: GameConfig = {
+  INITIAL_HISTORY: [Array(9).fill(null)],
+  INITIAL_CURRENT_STEP: 0,
+  HISTORY_KEY: 'grid-history',
+  CURRENT_STEP_KEY: 'current-step',
+}
 
 export function getWinner(moves: Array<Move | null>): Move | undefined {
   for (let i = 0; i < WINNING_POSSIBILITIES.length; i++) {
@@ -59,7 +79,7 @@ export function getNextMove(moves: Array<Move | null>): Move | undefined {
 export function getStatus(
   nextMove: Move | undefined,
   winner: Move | undefined,
-) {
+): string {
   if (!winner && !nextMove) {
     return 'Draw'
   } else if (winner) {
@@ -69,19 +89,10 @@ export function getStatus(
   }
 }
 
-export function getHistoryCopy({
-  history,
-  moves,
-  currentStep,
-  index,
-  nextMove,
-}: {
-  history: Array<Array<Move | null>>
-  moves: Array<Move | null>
-  currentStep: number
-  index: number
-  nextMove: Move
-}): Array<Array<Move | null>> {
+export function getHistoryCopy(
+  config: HistoryCopyConfig,
+): Array<Array<Move | null>> {
+  const {history, moves, currentStep, index, nextMove} = config
   const historyCopy: Array<Array<Move | null>> = history.slice(
     0,
     currentStep + 1,
